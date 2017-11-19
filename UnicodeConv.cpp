@@ -118,7 +118,7 @@ bool ConvChU16ToU32(const std::array<char16_t, 2>& u16Ch, char32_t& u32Ch) {
 }
 
 bool ConvChU32ToU8(const char32_t u32Ch, std::array<char, 4>& u8Ch) {
-    if (u32Ch < 0 || u32Ch > 0x10FFFF) {
+    if (u32Ch > 0x10FFFF) {
         return false;
     }
 
@@ -148,7 +148,7 @@ bool ConvChU32ToU8(const char32_t u32Ch, std::array<char, 4>& u8Ch) {
 }
 
 bool ConvChU32ToU16(const char32_t u32Ch, std::array<char16_t, 2>& u16Ch) {
-    if (u32Ch < 0 || u32Ch > 0x10FFFF) {
+    if (u32Ch > 0x10FFFF) {
         return false;
     }
 
