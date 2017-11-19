@@ -154,7 +154,7 @@ int TestMain() {
     TestConvAll("日本語");
     TestConvAll("ΦΩε");
 
-#if _WIN32
+#ifdef _MSC_VER
     std::wstring_convert<std::codecvt_utf8_utf16<uint16_t>, uint16_t>
         u16convert;
     std::wstring_convert<std::codecvt_utf8<uint32_t>, uint32_t> u32convert;
