@@ -165,8 +165,8 @@ bool ConvChU32ToU16(const char32_t u32Ch, std::array<char16_t, 2>& u16Ch) {
     return true;
 }
 
-bool ConvU8ToU16(const std::string& u8str, std::u16string& u16str) {
-    for (auto u8It = u8str.begin(); u8It != u8str.end(); ++u8It) {
+bool ConvU8ToU16(const std::string& u8Str, std::u16string& u16Str) {
+    for (auto u8It = u8Str.begin(); u8It != u8Str.end(); ++u8It) {
         auto numBytes = GetU8ByteCount((*u8It));
         if (numBytes == 0) {
             return false;
@@ -176,7 +176,7 @@ bool ConvU8ToU16(const std::string& u8str, std::u16string& u16str) {
         u8Ch[0] = (*u8It);
         for (int i = 1; i < numBytes; i++) {
             ++u8It;
-            if (u8It == u8str.end()) {
+            if (u8It == u8Str.end()) {
                 return false;
             }
             u8Ch[i] = (*u8It);
@@ -187,16 +187,16 @@ bool ConvU8ToU16(const std::string& u8str, std::u16string& u16str) {
             return false;
         }
 
-        u16str.push_back(u16Ch[0]);
+        u16Str.push_back(u16Ch[0]);
         if (u16Ch[1] != 0) {
-            u16str.push_back(u16Ch[1]);
+            u16Str.push_back(u16Ch[1]);
         }
     }
     return true;
 }
 
-bool ConvU8ToU32(const std::string& u8str, std::u32string& u32str) {
-    for (auto u8It = u8str.begin(); u8It != u8str.end(); ++u8It) {
+bool ConvU8ToU32(const std::string& u8Str, std::u32string& u32Str) {
+    for (auto u8It = u8Str.begin(); u8It != u8Str.end(); ++u8It) {
         auto numBytes = GetU8ByteCount((*u8It));
         if (numBytes == 0) {
             return false;
@@ -206,7 +206,7 @@ bool ConvU8ToU32(const std::string& u8str, std::u32string& u32str) {
         u8Ch[0] = (*u8It);
         for (int i = 1; i < numBytes; i++) {
             ++u8It;
-            if (u8It == u8str.end()) {
+            if (u8It == u8Str.end()) {
                 return false;
             }
             u8Ch[i] = (*u8It);
@@ -217,18 +217,18 @@ bool ConvU8ToU32(const std::string& u8str, std::u32string& u32str) {
             return false;
         }
 
-        u32str.push_back(u32Ch);
+        u32Str.push_back(u32Ch);
     }
     return true;
 }
 
-bool ConvU16ToU8(const std::u16string& u16str, std::string& u8str) {
-    for (auto u16It = u16str.begin(); u16It != u16str.end(); ++u16It) {
+bool ConvU16ToU8(const std::u16string& u16Str, std::string& u8Str) {
+    for (auto u16It = u16Str.begin(); u16It != u16Str.end(); ++u16It) {
         std::array<char16_t, 2> u16Ch;
         if (IsU16HighSurrogate((*u16It))) {
             u16Ch[0] = (*u16It);
             ++u16It;
-            if (u16It == u16str.end()) {
+            if (u16It == u16Str.end()) {
                 return false;
             }
             u16Ch[1] = (*u16It);
@@ -242,28 +242,28 @@ bool ConvU16ToU8(const std::u16string& u16str, std::string& u8str) {
             return false;
         }
         if (u8Ch[0] != 0) {
-            u8str.push_back(u8Ch[0]);
+            u8Str.push_back(u8Ch[0]);
         }
         if (u8Ch[1] != 0) {
-            u8str.push_back(u8Ch[1]);
+            u8Str.push_back(u8Ch[1]);
         }
         if (u8Ch[2] != 0) {
-            u8str.push_back(u8Ch[2]);
+            u8Str.push_back(u8Ch[2]);
         }
         if (u8Ch[3] != 0) {
-            u8str.push_back(u8Ch[3]);
+            u8Str.push_back(u8Ch[3]);
         }
     }
     return true;
 }
 
-bool ConvU16ToU32(const std::u16string& u16str, std::u32string& u32str) {
-    for (auto u16It = u16str.begin(); u16It != u16str.end(); ++u16It) {
+bool ConvU16ToU32(const std::u16string& u16Str, std::u32string& u32Str) {
+    for (auto u16It = u16Str.begin(); u16It != u16Str.end(); ++u16It) {
         std::array<char16_t, 2> u16Ch;
         if (IsU16HighSurrogate((*u16It))) {
             u16Ch[0] = (*u16It);
             ++u16It;
-            if (u16It == u16str.end()) {
+            if (u16It == u16Str.end()) {
                 return false;
             }
             u16Ch[1] = (*u16It);
@@ -276,47 +276,47 @@ bool ConvU16ToU32(const std::u16string& u16str, std::u32string& u32str) {
         if (!ConvChU16ToU32(u16Ch, u32Ch)) {
             return false;
         }
-        u32str.push_back(u32Ch);
+        u32Str.push_back(u32Ch);
     }
     return true;
 }
 
-bool ConvU32ToU8(const std::u32string& u32str, std::string& u8str) {
-    for (auto u32It = u32str.begin(); u32It != u32str.end(); ++u32It) {
+bool ConvU32ToU8(const std::u32string& u32Str, std::string& u8Str) {
+    for (auto u32It = u32Str.begin(); u32It != u32Str.end(); ++u32It) {
         std::array<char, 4> u8Ch;
         if (!ConvChU32ToU8((*u32It), u8Ch)) {
             return false;
         }
 
         if (u8Ch[0] != 0) {
-            u8str.push_back(u8Ch[0]);
+            u8Str.push_back(u8Ch[0]);
         }
         if (u8Ch[1] != 0) {
-            u8str.push_back(u8Ch[1]);
+            u8Str.push_back(u8Ch[1]);
         }
 
         if (u8Ch[2] != 0) {
-            u8str.push_back(u8Ch[2]);
+            u8Str.push_back(u8Ch[2]);
         }
         if (u8Ch[3] != 0) {
-            u8str.push_back(u8Ch[3]);
+            u8Str.push_back(u8Ch[3]);
         }
     }
     return true;
 }
 
-bool ConvU32ToU16(const std::u32string& u32str, std::u16string& u16str) {
-    for (auto u32It = u32str.begin(); u32It != u32str.end(); ++u32It) {
+bool ConvU32ToU16(const std::u32string& u32Str, std::u16string& u16Str) {
+    for (auto u32It = u32Str.begin(); u32It != u32Str.end(); ++u32It) {
         std::array<char16_t, 2> u16Ch;
         if (!ConvChU32ToU16((*u32It), u16Ch)) {
             return false;
         }
 
         if (u16Ch[0] != 0) {
-            u16str.push_back(u16Ch[0]);
+            u16Str.push_back(u16Ch[0]);
         }
         if (u16Ch[1] != 0) {
-            u16str.push_back(u16Ch[1]);
+            u16Str.push_back(u16Ch[1]);
         }
     }
     return true;
