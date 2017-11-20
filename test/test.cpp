@@ -154,7 +154,46 @@ int TestMain() {
     TestConvAll("日本語");
     TestConvAll("ΦΩε");
 
-#ifdef _MSC_VER
+    // Wrong UTF-8
+    {
+        char32_t u32Ch;
+        std::array<char, 4> u8Ch;
+        u8Ch[0] = char(0xC0);
+        u8Ch[1] = char(0xAF);
+        u8Ch[2] = 0;
+        u8Ch[3] = 0;
+        if (ConvChU8ToU32(u8Ch, u32Ch)) {
+            std::cout << "Failed to validate wrong UTF-8 character.["
+                      << int(uint8_t(u8Ch[0])) << ", " << int(uint8_t(u8Ch[1]))
+                      << "]\n";
+            return 1;
+        }
+
+        u8Ch[0] = char(0xE0);
+        u8Ch[1] = char(0x80);
+        u8Ch[2] = char(0xAF);
+        u8Ch[3] = 0;
+        if (ConvChU8ToU32(u8Ch, u32Ch)) {
+            std::cout << "Failed to validate wrong UTF-8 character.["
+                      << int(uint8_t(u8Ch[0])) << ", " << int(uint8_t(u8Ch[1]))
+                      << ", " << int(uint8_t(u8Ch[2])) << "]\n";
+            return 1;
+        }
+
+        u8Ch[0] = char(0xF0);
+        u8Ch[1] = char(0x80);
+        u8Ch[2] = char(0x80);
+        u8Ch[3] = char(0xAF);
+        if (ConvChU8ToU32(u8Ch, u32Ch)) {
+            std::cout << "Failed to validate wrong UTF-8 character.["
+                      << int(uint8_t(u8Ch[0])) << ", " << int(uint8_t(u8Ch[1]))
+                      << ", " << int(uint8_t(u8Ch[2])) << ", "
+                      << int(uint8_t(u8Ch[3])) << "]\n";
+            return 1;
+        }
+    }
+
+#if _MSC_VER
     std::wstring_convert<std::codecvt_utf8_utf16<uint16_t>, uint16_t>
         u16convert;
     std::wstring_convert<std::codecvt_utf8<uint32_t>, uint32_t> u32convert;
