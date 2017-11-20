@@ -5,13 +5,13 @@ int GetU8ByteCount(char ch) {
     if (0 <= uint8_t(ch) && uint8_t(ch) < 0x80) {
         return 1;
     }
-    if (0xC0 <= uint8_t(ch) && uint8_t(ch) < 0xE0) {
+    if (0xC2 <= uint8_t(ch) && uint8_t(ch) < 0xE0) {
         return 2;
     }
     if (0xE0 <= uint8_t(ch) && uint8_t(ch) < 0xF0) {
         return 3;
     }
-    if (0xF0 <= uint8_t(ch) && uint8_t(ch) < 0xFF) {
+    if (0xF0 <= uint8_t(ch) && uint8_t(ch) < 0xF8) {
         return 4;
     }
     return 0;
