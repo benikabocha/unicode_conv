@@ -53,12 +53,19 @@ bool ConvChU8ToU32(const std::array<char, 4>& u8Ch, char32_t& u32Ch) {
             if (!IsU8LaterByte(u8Ch[1])) {
                 return false;
             }
+            if ((uint8_t(u8Ch[0]) & 0x1E) == 0) {
+                return false;
+            }
 
             u32Ch = char32_t(u8Ch[0] & 0x1F) << 6;
             u32Ch |= char32_t(u8Ch[1] & 0x3F);
             break;
         case 3:
             if (!IsU8LaterByte(u8Ch[1]) || !IsU8LaterByte(u8Ch[2])) {
+                return false;
+            }
+            if ((uint8_t(u8Ch[0]) & 0x0F) == 0 &&
+                (uint8_t(u8Ch[1]) & 0x20) == 0) {
                 return false;
             }
 
@@ -69,6 +76,10 @@ bool ConvChU8ToU32(const std::array<char, 4>& u8Ch, char32_t& u32Ch) {
         case 4:
             if (!IsU8LaterByte(u8Ch[1]) || !IsU8LaterByte(u8Ch[2]) ||
                 !IsU8LaterByte(u8Ch[3])) {
+                return false;
+            }
+            if ((uint8_t(u8Ch[0]) & 0x07) == 0 &&
+                (uint8_t(u8Ch[1]) & 0x30) == 0) {
                 return false;
             }
 
